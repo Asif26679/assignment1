@@ -17,18 +17,16 @@ function App() {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-gray-100 p-4 md:p-10">
 
-      <div className="max-w-5xl mx-auto bg-white p-8 rounded-lg shadow">
+      <div className="max-w-5xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow">
 
-        <h1 className="text-3xl font-bold mb-4">
+        <h1 className="text-2xl md:text-3xl font-bold mb-4">
           Student Dashboard
         </h1>
 
         {loading && (
-          <p className="text-blue-500 mb-4">
-            Loading...
-          </p>
+          <p className="text-blue-500 mb-3">Loading...</p>
         )}
 
         <StudentForm
@@ -41,7 +39,7 @@ function App() {
 
         <input
           placeholder="Search student..."
-          className="border p-2 mt-6 mb-4 rounded w-64"
+          className="border p-2 mt-6 mb-4 rounded w-full md:w-64"
           onChange={(e) => setSearch(e.target.value)}
         />
 

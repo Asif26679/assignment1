@@ -37,14 +37,16 @@ function StudentForm({
 
       if (editStudent) {
 
-        const updatedStudents = students.map((student) =>
-
+        const updated = students.map((student) =>
           student.id === editStudent.id
             ? { id: student.id, name, email, age }
             : student
         );
 
-        setStudents(updatedStudents);
+        setStudents(updated);
+
+        alert("Student updated successfully");
+
         setEditStudent(null);
 
       } else {
@@ -57,6 +59,9 @@ function StudentForm({
         };
 
         setStudents([...students, newStudent]);
+
+        alert("Student added successfully");
+
       }
 
       setName("");
@@ -73,7 +78,7 @@ function StudentForm({
 
     <form
       onSubmit={handleSubmit}
-      className="grid grid-cols-3 gap-3"
+      className="grid grid-cols-1 md:grid-cols-3 gap-3"
     >
 
       <input
@@ -98,7 +103,7 @@ function StudentForm({
       />
 
       <button
-        className="col-span-3 bg-blue-500 text-white p-2 rounded"
+        className="md:col-span-3 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
       >
         {editStudent ? "Update Student" : "Add Student"}
       </button>

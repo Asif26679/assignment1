@@ -7,19 +7,19 @@ function StudentTable({ students, setStudents, setEditStudent }) {
 
   const confirmDelete = () => {
 
-    const filteredStudents = students.filter(
+    const filtered = students.filter(
       (student) => student.id !== deleteId
     );
 
-    setStudents(filteredStudents);
-    setDeleteId(null);
+    setStudents(filtered);
+    alert("Student deleted successfully");
 
+    setDeleteId(null);
   };
 
   const downloadExcel = () => {
 
     const worksheet = XLSX.utils.json_to_sheet(students);
-
     const workbook = XLSX.utils.book_new();
 
     XLSX.utils.book_append_sheet(
@@ -29,168 +29,162 @@ function StudentTable({ students, setStudents, setEditStudent }) {
     );
 
     XLSX.writeFile(workbook, "students.xlsx");
-
   };
 
   return (
 
-    <div className="mt-6">
+    <div>
+
       {students.length > 0 && (
-        <div className="flex justify-end mb-4">
 
-          <button
-            onClick={downloadExcel}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-          >
-            Export Excel
-          </button>
+        <button
+          onClick={downloadExcel}
+          className="bg-green-500 text-white px-4 py-2 mb-4 rounded"
+        >
+          Download Excel
+        </button>
 
-        </div>
       )}
-
 
       {students.length === 0 && (
 
-        <div className="text-center py-16 border rounded-xl bg-gray-50">
+        <div className="text-center py-10 border rounded bg-gray-50">
 
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">
+          <h2 className="text-lg font-semibold">
             No Students Added
           </h2>
 
           <p className="text-gray-500">
-            Start by adding your first student above
+            Add your first student above
           </p>
 
         </div>
 
       )}
 
+      {/* Desktop Table */}
 
-      {students.length > 0 && (
+      <div className="hidden md:block">
 
-        <div className="overflow-hidden rounded-xl border shadow-sm">
+        <table className="w-full border">
 
-          <table className="w-full">
+          <thead className="bg-gray-200">
 
-            <thead className="bg-gray-100 text-gray-600 text-sm">
+            <tr>
+              <th className="p-2 text-left">Name</th>
+              <th>Email</th>
+              <th>Age</th>
+              <th>Actions</th>
+            </tr>
 
-              <tr>
+          </thead>
 
-                <th className="text-left px-5 py-3">
-                  Student
-                </th>
+          <tbody>
 
-                <th className="text-left px-5 py-3">
-                  Email
-                </th>
+            {students.map((student) => (
 
-                <th className="text-center px-5 py-3">
-                  Age
-                </th>
+              <tr key={student.id} className="border-t">
 
-                <th className="text-center px-5 py-3">
-                  Actions
-                </th>
+                <td className="p-2">{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.age}</td>
+
+                <td>
+
+                  <button
+                    onClick={()=>setEditStudent(student)}
+                    className="text-blue-500 mr-2"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={()=>setDeleteId(student.id)}
+                    className="text-red-500"
+                  >
+                    Delete
+                  </button>
+
+                </td>
 
               </tr>
 
-            </thead>
+            ))}
 
-            <tbody>
+          </tbody>
 
-              {students.map((student) => (
+        </table>
 
-                <tr
-                  key={student.id}
-                  className="border-t hover:bg-gray-50 transition"
-                >
+      </div>
 
-                  <td className="px-5 py-3 flex items-center gap-3">
+      {/* Mobile Cards */}
 
-                    <div className="w-9 h-9 rounded-full bg-indigo-500 text-white flex items-center justify-center text-sm font-semibold">
+      <div className="md:hidden space-y-4">
 
-                      {student.name.charAt(0).toUpperCase()}
+        {students.map((student) => (
 
-                    </div>
+          <div
+            key={student.id}
+            className="border rounded-lg p-4 shadow-sm"
+          >
 
-                    <span className="font-medium text-gray-700">
-                      {student.name}
-                    </span>
+            <p className="font-semibold text-lg">
+              {student.name}
+            </p>
 
-                  </td>
+            <p className="text-gray-600">
+              {student.email}
+            </p>
 
-                  <td className="px-5 py-3 text-gray-600">
-                    {student.email}
-                  </td>
+            <p className="text-sm text-gray-500 mb-3">
+              Age: {student.age}
+            </p>
 
-                  <td className="px-5 py-3 text-center">
+            <button
+              onClick={()=>setEditStudent(student)}
+              className="text-blue-500 mr-3"
+            >
+              Edit
+            </button>
 
-                    <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">
+            <button
+              onClick={()=>setDeleteId(student.id)}
+              className="text-red-500"
+            >
+              Delete
+            </button>
 
-                      {student.age} yrs
+          </div>
 
-                    </span>
+        ))}
 
-                  </td>
+      </div>
 
-                  <td className="px-5 py-3 text-center">
-
-                    <button
-                      onClick={() => setEditStudent(student)}
-                      className="text-blue-500 mr-4 hover:underline"
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      onClick={() => setDeleteId(student.id)}
-                      className="text-red-500 hover:underline"
-                    >
-                      Delete
-                    </button>
-
-                  </td>
-
-                </tr>
-
-              ))}
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      )}
-
+      {/* Delete Popup */}
 
       {deleteId && (
 
         <div className="fixed inset-0 flex items-center justify-center bg-black/30">
 
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
+          <div className="bg-white p-6 rounded">
 
-            <p className="mb-4 text-gray-700">
-              Are you sure you want to delete this student?
+            <p className="mb-4">
+              Are you sure you want to delete?
             </p>
 
-            <div className="flex justify-center gap-3">
+            <button
+              onClick={()=>setDeleteId(null)}
+              className="mr-3 border px-3 py-1"
+            >
+              Cancel
+            </button>
 
-              <button
-                onClick={() => setDeleteId(null)}
-                className="border px-4 py-2 rounded-lg"
-              >
-                Cancel
-              </button>
-
-              <button
-                onClick={confirmDelete}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Delete
-              </button>
-
-            </div>
+            <button
+              onClick={confirmDelete}
+              className="bg-red-500 text-white px-3 py-1"
+            >
+              Delete
+            </button>
 
           </div>
 
@@ -201,7 +195,6 @@ function StudentTable({ students, setStudents, setEditStudent }) {
     </div>
 
   );
-
 }
 
 export default StudentTable;
