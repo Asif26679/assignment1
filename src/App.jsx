@@ -1,9 +1,6 @@
 import { useState } from "react";
-import StudentForm from "../src/components/studentForm";
-import StudentTable from "../src/components/studentTable";
-import studentsData from "../src/data/studentData";
-
-
+import StudentForm from "./components/studentForm";
+import StudentTable from "./components/studentTable";
 
 
 function App() {

@@ -35,9 +35,6 @@ function StudentTable({ students, setStudents, setEditStudent }) {
   return (
 
     <div className="mt-6">
-
-      {/* Excel Button */}
-
       {students.length > 0 && (
         <div className="flex justify-end mb-4">
 
@@ -51,7 +48,6 @@ function StudentTable({ students, setStudents, setEditStudent }) {
         </div>
       )}
 
-      {/* Empty State */}
 
       {students.length === 0 && (
 
@@ -69,7 +65,6 @@ function StudentTable({ students, setStudents, setEditStudent }) {
 
       )}
 
-      {/* Table */}
 
       {students.length > 0 && (
 
@@ -168,7 +163,6 @@ function StudentTable({ students, setStudents, setEditStudent }) {
 
       )}
 
-      {/* Delete Confirmation Dialog */}
 
       {deleteId && (
 
