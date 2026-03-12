@@ -62,7 +62,7 @@ function StudentTable({ students, setStudents, setEditStudent }) {
 
       )}
 
-      {/* Desktop Table */}
+      
 
       <div className="hidden md:block">
 
@@ -117,7 +117,6 @@ function StudentTable({ students, setStudents, setEditStudent }) {
 
       </div>
 
-      {/* Mobile Cards */}
 
       <div className="md:hidden space-y-4">
 
@@ -160,7 +159,7 @@ function StudentTable({ students, setStudents, setEditStudent }) {
 
       </div>
 
-      {/* Delete Popup */}
+      
 
       {deleteId && (
 
